@@ -1,0 +1,19 @@
+apt install pacemaker crmsh
+apt install nginx
+systemctl disable nginx
+systemctl disable pacemaker
+
+vi /etc/nginx/sites-available/default 
+
+cd /etc/corosync/
+vi corosync.conf
+
+man corosync
+corosync-keygen
+
+systemctl start corosync
+systemctl start pacemaker
+
+crm_mon 
+crm
+cibadmin --query
