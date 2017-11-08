@@ -1,0 +1,49 @@
+apt install drbd-utils lvm2
+fdisk /dev/sda
+- create one huge partition covering whole drive
+- partition type is 8e lvm
+
+pvcreate /dev/sda1
+vgcreate vgssd1 /dev/sda1
+lvcreate vgssd1 -L 10G -n drbd1
+
+# ARM specific 
+update-initramfs -k `uname -r` -c -b /
+mkimage -A arm -T ramdisk -C none -n uInitrd -d initrd.img-3.10.80 /boot/uInitrd
+
+# run create-md and up on both nodes 
+drbdadm create-md r0
+output:
+md_offset 10737414144
+al_offset 10737381376
+bm_offset 10737053696
+
+Found some data
+
+ ==> This might destroy existing data! <==
+
+Do you want to proceed?
+[need to type 'yes' to confirm] yes
+
+initializing activity log
+NOT initializing bitmap
+Writing meta data...
+New drbd meta data block successfully created.
+
+drbdadm up r0 
+
+output:
+version: 8.4.3 (api:1/proto:86-101)
+srcversion: FB3AC7056350AC64629E395
+
+ 1: cs:Connected ro:Secondary/Secondary ds:Inconsistent/Inconsistent C r-----
+    ns:0 nr:0 dw:0 dr:0 al:0 bm:0 lo:0 pe:0 ua:0 ap:0 ep:1 wo:f oos:10485404
+
+# on one node only :-)
+drbdadm primary --force r0
+
+# on primary node format
+mkfs.ext4 /dev/drbd1
+
+mkdir /ha-mount
+
