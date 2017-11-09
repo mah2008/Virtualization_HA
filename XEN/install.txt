@@ -1,0 +1,31 @@
+apt install xen-system
+vi /etc/default/xendomains 
+dpkg-divert --divert /etc/grub.d/08_linux_xen --rename /etc/grub.d/20_linux_xen
+vi /etc/network/interfaces
+mkdir /storage
+mkdir templates
+mkdir vms
+cd templates/
+cd /storage/
+cd templates/
+wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-kernel
+wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-initramfs
+wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-rootfs.img.gz
+wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-uec.tar.gz
+cp templates/cirros-0.3.5-x86_64-disk.img vms/test01.img
+vi test01.cfg 
+xl create test01.cfg
+xl console test01
+xl list
+vi /etc/default/xen
+xl list
+xl console test01
+xl list
+xl uptime test01
+cp /storage/templates/cirros-0.3.5-x86_64-disk.img  /storage/vms/test02.img 
+cp test01.cfg test02.cfg
+vi test02.cfg 
+xl create test02.cfg -c
+ip addr show
+brctl show

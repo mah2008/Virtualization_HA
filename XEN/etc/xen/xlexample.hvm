@@ -1,0 +1,35 @@
+# =====================================================================
+# Example HVM guest configuration
+# =====================================================================
+#
+# This is a fairly minimal example of what is required for an
+# HVM guest. For a more complete guide see xl.cfg(5)
+
+# This configures an HVM rather than PV guest
+builder = "hvm"
+
+# Guest name
+name = "test01"
+memory = 256
+
+# Maximum memory (MB)
+# If this is greater than `memory' then the slack will start ballooned
+# (this assumes guest kernel support for ballooning)
+#maxmem = 512
+
+# Number of VCPUS
+vcpus = 2
+
+# Network devices
+# A list of 'vifspec' entries as described in
+# docs/misc/xl-network-configuration.markdown
+vif = [ 'bridge=xenbr1' ]
+
+# Disk Devices
+# A list of `diskspec' entries as described in
+# docs/misc/xl-disk-configuration.txt
+disk = [ 'file:/storage/vms/test01.img,xvda,rw' ]
+
+# Guest VGA console configuration, either SDL or VNC
+sdl = 1
+#vnc = 1
