@@ -1,0 +1,9 @@
+Cluster Status:
+ Stack: corosync
+ Current DC: os-neutron (version 1.1.16-94ff4df) - partition with quorum
+ Last updated: Fri Nov 10 22:09:38 2017
+ Last change: Thu Nov  9 23:13:50 2017 by root via crm_attribute on os-nova
+ 2 nodes configured
+ 5 resources configured
+
+PCSD Status:

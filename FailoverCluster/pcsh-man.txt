@@ -1,0 +1,26 @@
+
+Usage: pcs [-f file] [-h] [commands]...
+Control and configure pacemaker and corosync.
+
+Options:
+    -h, --help  Display usage and exit.
+    -f file     Perform actions on file instead of active CIB.
+    --debug     Print all network traffic and external commands run.
+    --version   Print pcs version information.
+
+Commands:
+    cluster     Configure cluster options and nodes.
+    resource    Manage cluster resources.
+    stonith     Configure fence devices.
+    constraint  Set resource constraints.
+    property    Set pacemaker properties.
+    acl         Set pacemaker access control lists.
+    qdevice     Manage quorum device provider.
+    quorum      Manage cluster quorum settings.
+    booth       Manage booth (cluster ticket manager).
+    status      View cluster status.
+    config      View and manage cluster configuration.
+    pcsd        Manage pcs daemon.
+    node        Manage cluster nodes.
+    alert       Set pacemaker alerts.
+
