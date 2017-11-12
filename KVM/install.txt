@@ -1,0 +1,15 @@
+dmesg | grep Hyp
+cat /proc/cpuinfo 
+modprobe kvm-intel
+lsmod
+ls -la /dev/kvm 
+apt install qemu-kvm libvirt-clients libvirt-daemon-system
+adduser deploy libvirt
+adduser deploy libvirt-qemu
+kvm -hda cirros-0.3.5-x86_64-disk.img -m 512 -display curses
+apt install virtinst
+virt-install --virt-type kvm --name test01  --location http://cdn-fastly.deb.debian.org/debian/dists/stretch/main/installer-amd64/ --extra-args "console=ttyS0" -v --disk size=4 --memory 512
+virsh net-list --all
+virsh console test01
+virsh start test01
+virsh list
