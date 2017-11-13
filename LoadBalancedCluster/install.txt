@@ -1,0 +1,3 @@
+apt install haproxy
+vi /etc/haproxy/haproxy.cfg
+systemctl reload haproxy
