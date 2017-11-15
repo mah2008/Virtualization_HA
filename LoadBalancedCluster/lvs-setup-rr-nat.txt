@@ -1,0 +1,33 @@
+#loadbalancer config
+
+# second ip addr  
+ip addr add 10.1.1.222 dev eth0.3
+
+# setup lvs with rr method
+ipvsadm -A -t 10.1.1.222:80 -s rr
+ipvsadm -a -t 10.1.1.222:80 -r 10.1.1.201:80 -m
+ipvsadm -a -t 10.1.1.222:80 -r 10.1.1.202:80 -m
+
+# ipvsadm output:
+#  IP Virtual Server version 1.2.1 (size=4096)
+# Prot LocalAddress:Port Scheduler Flags
+#   -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
+# TCP  10.1.1.222:http rr
+#   -> 10.1.1.201:http              Masq    1      1          0
+#   -> 10.1.1.202:http              Masq    1      1          0
+#
+# Kernel modules are loadded an initialized ...
+#[   35.250898] IPVS: Registered protocols (TCP, UDP, SCTP, AH, ESP)
+#[   35.251507] IPVS: Connection hash table configured (size=4096, memory=32Kbytes)
+#[   35.259260] IPVS: Each connection entry needs 224 bytes at least
+#[   35.259445] IPVS: Creating netns size=1232 id=0
+#[   35.263999] IPVS: ipvs loaded.
+#[   46.722207] IPVS: [rr] scheduler registered.
+#[ 9096.340382] IPVS: __ip_vs_del_service: enter
+
+# nat is used, backend servers default route is balancer, we need ip_forward 
+echo "1" > /proc/sys/net/ipv4/ip_forward
+
+
+# on backend server set new default route
+ip route change default via 10.1.1.222 dev ens2

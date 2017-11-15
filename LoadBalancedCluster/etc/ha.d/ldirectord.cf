@@ -1,0 +1,18 @@
+# Global Directives
+checktimeout=10
+checkinterval=2
+autoreload=no
+logfile="local0"
+quiescent=yes
+
+# Virtual Server for HTTP
+virtual=10.1.1.222:80
+        fallback=127.0.0.1:80
+        real=10.1.1.201:80 masq
+        real=10.1.1.202:80 masq
+        service=http
+        request="index.html"
+        receive="Test Page"
+        scheduler=rr
+        protocol=tcp
+        checktype=negotiate
